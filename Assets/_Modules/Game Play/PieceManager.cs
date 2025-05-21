@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,65 @@ public class PieceManager : MonoBehaviour
     public LayerMask playerLayer;             // Layer các mảnh (Player)
 
     private Vector2 swipeStart;
+
+    void Start()
+    {
+        StartCoroutine(ShufflePieces());
+    }
+
+    IEnumerator ShufflePieces()
+    {
+        int random = Random.Range(10, 15);
+
+        for (int i = 0; i < random; i++)
+        {
+            MoveShufflePieces();
+            yield return new WaitForSeconds(tweenDuration);
+        }
+    }
+
+    void MoveShufflePieces()
+    {
+        HashSet<Vector2> reservedPositions = new HashSet<Vector2>(); // lưu vị trí đã chọn
+
+        foreach (Transform piece in pieces)
+        {
+            BoxCollider2D box = piece.GetComponent<BoxCollider2D>();
+            if (box == null)
+            {
+                Debug.LogWarning($"{piece.name} chưa có BoxCollider2D");
+                continue;
+            }
+
+            Vector2 currentPos = piece.position;
+            Vector2 checkSize = box.bounds.size * 0.5f;
+
+            Vector2 direction = GetRandomDirection();
+            Vector2 targetPos = currentPos + direction * moveStep;
+
+            // Kiểm tra có va chạm chỗ targetPos chưa?
+            Collider2D hit = Physics2D.OverlapBox(targetPos, checkSize, 0f, obstacleLayer | playerLayer);
+
+            // Kiểm tra xem vị trí này đã có piece nào dự định di chuyển tới chưa
+            bool isReserved = reservedPositions.Contains(targetPos);
+
+            if (hit == null && !isReserved)
+            {
+                // Cho phép di chuyển
+                piece.DOMove(targetPos, tweenDuration).SetEase(Ease.OutQuad);
+                reservedPositions.Add(targetPos); // đặt vị trí này là đã dùng
+            }
+            // Nếu có va chạm hoặc đã bị đặt rồi → không di chuyển
+        }
+    }
+
+
+    Vector2 GetRandomDirection()
+    {
+        Vector2[] directions = new Vector2[] { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
+        return directions[Random.Range(0, directions.Length)];
+    }
+
 
     void Update()
     {
