@@ -26,7 +26,7 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
         int levelAt = Player.Instance.maxCurrentLevel;
-
+        Debug.Log("levelAt: " + levelAt);
         for (int i = 0; i < levelObjects.Length; i++)
         {
             if (i <= levelAt)

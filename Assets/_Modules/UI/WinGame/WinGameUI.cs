@@ -35,7 +35,8 @@ public class WinGameUI : MonoBehaviour
     {
         Debug.Log("WIN");
         AudioManager.Instance.PlaySound(GameAudioClip.REWARD_SOUND);
-
+        if (Player.Instance.currentLevel == Player.Instance.maxCurrentLevel)
+            Player.Instance.maxCurrentLevel++;
         if (Player.Instance.currentLevel + 1 == GameManager.Instance.levelPrefabs.Length)
             nextButton.interactable = false;
         WinPanel.SetActive(true);
