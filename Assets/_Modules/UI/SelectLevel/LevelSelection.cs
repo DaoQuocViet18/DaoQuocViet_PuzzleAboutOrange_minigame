@@ -4,11 +4,16 @@ using UnityEngine.UI;
 
 public class LevelSelection : MonoBehaviour
 {
+    [SerializeField] private Button quitButton;
     [SerializeField] private GameObject[] levelObjects; // Mảng các GameObject chứa Button + Stars
     public Sprite starLoseSprite; // Kéo sprite hình sao thua vào trong Inspector
 
     private void Awake()
     {
+        quitButton.onClick.AddListener(() => {
+            Loader.Instance.LoadWithFade(SceneName.MainMenuScene);
+        });
+
         for (int i = 0; i < levelObjects.Length; i++)
         {
             int levelIndex = i; // Lưu trữ chỉ số level

@@ -560,6 +560,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectLevelUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5613426837980150514, guid: fa837dcc900d5a34fa41b7a185b1da29, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226190892417289102, guid: fa837dcc900d5a34fa41b7a185b1da29, type: 3}
+      propertyPath: m_text
+      value: Level 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

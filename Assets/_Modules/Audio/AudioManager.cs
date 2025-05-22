@@ -3,14 +3,8 @@ using System.Threading.Tasks;
 
 public enum GameAudioClip
 {
-    BGM_PLAYING,
-    POP,
-    WOA,
-    COLLECT,
-    BACKGROUND_MUSIC,
     REWARD_SOUND,
-    BUBBLING_SOUND,
-    POP_SOUND_EFFECT,
+    GAMEOVER_SOUND,
 }
 
 public class AudioManager : Singleton<AudioManager> 
